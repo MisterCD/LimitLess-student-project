@@ -16,9 +16,7 @@ class Genre extends Model
     protected $guarded = []; 
 
     public static function rule_name(){
-        VALIDATION->add("name", ["required" => "Имя жанра обязательно",
-                                 "min"      => "Минимум 6 символов",
-                                 "max"      => "Максимум 30 символов"], ["min" => 6, "max" => 30]);
+        VALIDATION->add("name", ["required" => "Имя жанра обязательно"]);
     }
 
 }

@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Rewiew;
 use App\Models\Room;
+use App\Models\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +28,9 @@ class AdminController extends Controller
         $result = Movie::validate();
         $result["stars"] = 0;
         $image = $request->file("title_image");
+        if (!$request->hasFile('title_image') || !$request->file('title_image')->isValid()) {
+            return back()->withErrors("Файл обложки не выбран или загружен с ошибкой (проверьте размер файла).");
+        }
         try{
             $path = $image->store("movies", "public");
             $result["title_image"] = $path;
@@ -60,6 +64,7 @@ class AdminController extends Controller
             $result = Movie::validate();
             Movie::where("id", $id)->update($result);
         }
+        return redirect()->route("admin_movies");
     }
 
 
@@ -114,7 +119,7 @@ class AdminController extends Controller
         if($this->notAdmin()){
             return redirect()->route("main");
         }
-        $moves = Movie::paginate(6);
+        $moves = Movie::join("genre", "movies.genre_id", "=", "genre.id")->select("movies.*", "genre.name as genre_name")->paginate(6);
         return view("admin.movies", ["movies" => $moves]);
     }
 
@@ -158,6 +163,7 @@ class AdminController extends Controller
         Acter::insert($result);
         return back();
     }
+    
 
 
     public function createActorPage_get(Request $request){
@@ -165,7 +171,7 @@ class AdminController extends Controller
             return redirect()->route("main");
         }
         $movies = Movie::all()->select("name", "id");
-        return view("admin.createActor", ["movies" => $movies]);
+        return view("admin.create_actor", ["movies" => $movies]);
     }
 
 
@@ -248,6 +254,59 @@ class AdminController extends Controller
     public function addRoomPage_get(Request $request){
         $rooms = Room::paginate(6);
         return view("admin.rooms", ["rooms" => $rooms]);
+    }
+
+
+    public function createGenre_post(Request $request){
+        Genre::rule_name();
+        $result = Genre::validate();
+        Genre::insert($result);
+        return redirect()->route("genres");
+    }
+
+
+    public function genres_get(Request $request){
+        $genres = Genre::all();
+        return view("admin.genres", ["genres" => $genres]);
+    }
+
+
+    public function deleteGenre_post(Request $request){
+        $id = $request->get("id");
+        Genre::delete($id);
+        return back();
+    }
+
+
+    public function createSession_post(Request $request){
+        if($this->notAdmin()){
+            return redirect()->route("main");
+        }
+        Session::rule_all();
+        $result = Session::validate();
+        Session::insert($result);
+        return back();
+    }
+
+
+    public function deleteSession_post(Request $request){
+        if($this->notAdmin()){
+            return redirect()->route("main");
+        }
+        $id = $request->get("id");
+        Session::delete($id);
+        return back();
+    }
+
+
+    public function createSessionPage_get(Request $request){
+        if($this->notAdmin()){
+            return redirect()->route("main");
+        }
+        $movies = Movie::all();
+        $rooms = Room::all();
+        $sessions = Session::join("movies", "sessions.movie_id", "=", "movies.id")->join("rooms", "sessions.room_id", "=", "rooms.id")->select("movies.name as movie_name", "sessions.*", "rooms.name as room_name")->paginate(6);
+        return view("admin.create_session", ["movies" => $movies, "rooms" => $rooms, "sessions" => $sessions]);
     }
 
 }

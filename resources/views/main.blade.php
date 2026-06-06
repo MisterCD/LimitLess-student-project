@@ -4,7 +4,7 @@
 
 @section('content')
 
-{{-- HERO --}}
+ 
 <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-{{-- FEATURED MOVIES --}}
+ 
 <section style="padding-top:60px">
     <div class="section-header">
         <div class="section-title">
@@ -51,15 +51,7 @@
         <a href="{{ route('movies') }}" class="btn btn-ghost">Все фильмы →</a>
     </div>
 
-    <div class="genres-row">
-        <div class="genre-chip active">Все</div>
-        <div class="genre-chip">Боевик</div>
-        <div class="genre-chip">Драма</div>
-        <div class="genre-chip">Комедия</div>
-        <div class="genre-chip">Триллер</div>
-        <div class="genre-chip">Фантастика</div>
-        <div class="genre-chip">Анимация</div>
-    </div>
+    
 
     <div class="movies-grid">
         @foreach($movies as $movie)
@@ -68,7 +60,7 @@
     </div>
 </section>
 
-{{-- FEATURES --}}
+ 
 <section style="background:var(--bg2);padding:64px 40px">
     <div class="section-header">
         <div class="section-title">

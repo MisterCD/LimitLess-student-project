@@ -10,7 +10,7 @@ class MainController extends Controller
 {
 
     public function main_get(Request $request){
-        $movies = Movie::limit(5);
+        $movies = Movie::limit(5)->get();
         return view("main", ["movies" => $movies]);
     }
 
@@ -40,6 +40,11 @@ class MainController extends Controller
         $movie   =  Movie::find($id);
         $rewiews =  Rewiew::where("id", $id);
         return view("movie_page", ["movie" => $movie, "rewiews" => $rewiews]);
+    }
+
+
+    public function booking_get(Request $request){
+ 
     }
 
 }

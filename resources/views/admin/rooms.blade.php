@@ -5,7 +5,7 @@
 @section('content')
 <div class="admin-page-title">Залы</div>
 
-{{-- ADD ROOM FORM --}}
+ 
 <div class="admin-form" style="margin-bottom:40px">
     <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;margin-bottom:20px">Добавить зал</div>
 
@@ -42,7 +42,7 @@
     </form>
 </div>
 
-{{-- ROOMS TABLE --}}
+ 
 <table class="admin-table">
     <thead>
         <tr>

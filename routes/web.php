@@ -56,3 +56,11 @@ Route::get('/admin/changeMoviePage', [App\Http\Controllers\AdminController::clas
 
 Route::get('/registration', [App\Http\Controllers\UserController::class, 'register_get'])->name('register');
 Route::get('/admin/addRoomPage', [App\Http\Controllers\AdminController::class, 'addRoomPage_get'])->name('addRoomPage');
+Route::post('/admin/createGenre', [App\Http\Controllers\AdminController::class, 'createGenre_post'])->name('createGenre');
+Route::get('/admin/genres', [App\Http\Controllers\AdminController::class, 'genres_get'])->name('genres');
+Route::post('/deleteGenre', [App\Http\Controllers\AdminController::class, 'deleteGenre_post'])->name('deleteGenre');
+Route::get('/admin/createSession', [App\Http\Controllers\AdminController::class, 'createSession_post'])->name('createSession');
+Route::post('/admin/deleteSession', [App\Http\Controllers\AdminController::class, 'deleteSession_post'])->name('deleteSession');
+Route::get('/admin/createSessionPage', [App\Http\Controllers\AdminController::class, 'createSessionPage_get'])->name('createSessionPage');
+Route::get('/admin/sessions', [App\Http\Controllers\AdminController::class, 'admin_sessions_get'])->name('admin_sessions');
+Route::get('/booking', [App\Http\Controllers\MainController::class, 'booking_get'])->name('booking');

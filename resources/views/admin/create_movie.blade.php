@@ -54,10 +54,10 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Жанр</label>
-                <select name="genre" class="form-input" required>
+                <select name="genre_id" class="form-input" required>
                     <option value="" disabled selected>Выберите жанр</option>
                     @foreach($genres as $genre)
-                        <option value="{{ $genre->id }}" {{ old('genre') == $genre->id ? 'selected' : '' }}>
+                        <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>
                             {{ $genre->name }}
                         </option>
                     @endforeach

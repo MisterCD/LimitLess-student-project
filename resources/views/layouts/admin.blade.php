@@ -40,7 +40,7 @@
 
 <div class="admin-layout" style="padding-top:64px">
 
-    {{-- SIDEBAR --}}
+     
     <div class="admin-sidebar">
         <div class="sidebar-section">
             <div class="sidebar-label">Управление</div>
@@ -61,6 +61,10 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
                 Пользователи
             </a>
+            <a href="{{ route('genres') }}" class="sidebar-link {{ request()->routeIs('genres') ? 'active' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                Жанры
+            </a>
         </div>
 
         <div class="sidebar-section">
@@ -73,14 +77,14 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
                 Добавить актёра
             </a>
-            <a href="{{ route('addRoomPage') }}" class="sidebar-link">
+            <a href="{{ route('addRoom') }}" class="sidebar-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
                 Добавить зал
             </a>
         </div>
     </div>
 
-    {{-- MAIN CONTENT --}}
+     
     <div class="admin-main">
         @yield('content')
     </div>

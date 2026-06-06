@@ -54,7 +54,7 @@ class Movie extends Model
     
 
     public static function rule_genre(){
-      VALIDATION->add("genre", ["required" => "Поле жанра обязательно", 
+      VALIDATION->add("genre_id", ["required" => "Поле жанра обязательно", 
                                 "integer" => "Жанр должен быть числом id"]);
     }
 

@@ -28,7 +28,7 @@
                 </td>
                 <td>
                     <div style="display:flex;gap:6px;align-items:center">
-                        {{-- CHANGE ROLE --}}
+                         
                         <form method="POST" action="{{ route('changeUser') }}" style="display:inline">
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
@@ -38,7 +38,7 @@
                             </button>
                         </form>
 
-                        {{-- DELETE --}}
+                         
                         <form method="POST" action="{{ route('deleteUser') }}" style="display:inline"
                               onsubmit="return confirm('Удалить пользователя «{{ $user->name }}»?')">
                             @csrf

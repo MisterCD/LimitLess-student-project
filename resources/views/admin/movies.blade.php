@@ -24,7 +24,7 @@
         @forelse($movies as $movie)
             <tr>
                 <td style="font-weight:500">{{ $movie->name }}</td>
-                <td style="color:var(--text2)">{{ $movie->genre->name ?? '—' }}</td>
+                <td style="color:var(--text2)">{{ $movie->genre_name ?? '—' }}</td>
                 <td style="color:var(--text2)">{{ $movie->year }}</td>
                 <td style="color:var(--text2)">{{ $movie->author }}</td>
                 <td>
