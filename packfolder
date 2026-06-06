@@ -1,0 +1,143 @@
+<?php
+
+
+
+class Packfolder{
+
+    public $arrayCommand = [];
+    public function __construct(){
+
+    }
+    public function addCommand(string $name, $callback){
+        $this->arrayCommand[$name] = $callback;
+    }
+}
+
+function doCommand(string $command){
+        $log = shell_exec("powershell.exe -Command \"$command\"");
+        return $log;
+}
+
+class VERIBLES_CLASS{
+    private $keys = [];
+    public function __construct(){
+
+    }
+    public function set(string $key, $value){
+        $this->keys[$key] = $value;
+    }
+    public function get(string $key){
+        if(!empty($this->keys[$key])){
+            return $this->keys[$key];
+        }else{
+            return null;
+        }
+    }
+    public function check(string $key){
+        return !empty($this->keys[$key]);
+    }
+}
+
+const VERIBLES = new VERIBLES_CLASS();
+
+function checkVerible(string $line){
+    $values = explode(" = ", $line);
+    if(count($values) > 1){
+        return true;
+    }else{
+        return false;
+    }
+}
+function parseVeribles(string $line){
+        $values = explode(" = ", $line);
+        VERIBLES->set($values[0], $values[1]);
+}
+function readPackCommands(string $path){
+        $file = fopen($path, 'r');
+        if ($file) {
+            while (($line = fgets($file)) !== false) {
+                if(checkVerible($line)){
+                    parseVeribles($line);
+                }else{
+                    read($line);
+                }
+            }
+            fclose($file);
+        } else {
+            print "Ошибка открытия файла";
+        }
+}
+
+$argcount = 0;
+$isInput = false;
+$tokensBuffer = [];
+function arg_next(int $num = 1){
+    global $argcount, $argv, $isInput, $tokensBuffer;
+    if($isInput){
+        $argcount += $num;
+        return $tokensBuffer[$argcount];
+    }else{
+        $argcount += $num;
+        return $argv[$argcount];
+    }
+}
+
+$packfolder = new Packfolder();
+
+function exit_if_not_input(){
+    global $isInput;
+    if(!$isInput){
+        exit();
+    }
+}
+
+function read(string $line){
+    global $packfolder, $isInput, $tokensBuffer, $argcount;
+    $newline = str_replace("\n", "", $line);
+    $argcount = 0;
+    $isInput = true;
+    $tokens = explode(" ", $newline);
+    $tokensBuffer = $tokens;
+    if(count($tokens) > 0){
+        if(!empty($packfolder->arrayCommand[$tokens[0]])){
+            $packfolder->arrayCommand[$tokens[0]]();
+        }else{
+            print "Неизвестная команада ".$tokens[0]."\n";
+        }
+    }
+}
+
+
+require "commands.php";
+
+init($packfolder);
+parseVeribles("./veribles.txt");
+for($i = 1; $i < $argc; $i++){
+    $str = $argv[$i];
+    $argcount = $i;
+    if(!empty($packfolder->arrayCommand[$str])){
+        $packfolder->arrayCommand[$str]();
+    }else{
+        print "Неизвестная команда: ".$str."\n";
+        break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
